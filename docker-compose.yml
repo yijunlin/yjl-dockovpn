@@ -5,12 +5,13 @@ version: '3'
 services:
   dockovpn:
     image: alekslitvinenk/openvpn
+    container_name: dockovpn
     cap_add:
-        - NET_ADMIN
+      - NET_ADMIN
     ports:
-        - 1194:1194/udp
-    environment:
-        HOST_ADDR: ${HOST_ADDR} 
-    volumes:
-        - ./openvpn_conf:/opt/Dockovpn_data
-    restart: always
+      - "1194:1194/udp"
+      - "80:8080/tcp"
+    restart: unless-stopped
+      #stdin_open: true # equivalent to -i in docker run
+      #tty: true        # equivalent to -t in docker run
+
