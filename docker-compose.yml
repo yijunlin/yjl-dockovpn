@@ -9,8 +9,8 @@ services:
       - NET_ADMIN  # 允许容器进行网络管理
     container_name: dockovpn
     ports:
-      - "402:1194/tcp"  # 映射主机的 443 端口到容器的 1194 TCP 端口
+      - "472:1194/tcp"  # 映射主机的 443 端口到容器的 1194 TCP 端口
       - "80:8080/tcp"  # 映射主机的 8080 端口到容器的 8080 TCP 端口
     environment:
-      - HOST_TUN_PORT=402  #
+      - HOST_TUN_PORT=472  #
     restart: unless-stopped  # 容器失败时自动重启
