@@ -1,17 +1,16 @@
-# First run
-# echo HOST_ADDR=$(curl -s https://api.ipify.org) > .env && docker-compose up -d && docker-compose exec -d dockovpn wget -O /doc/Dockovpn/client.ovpn localhost:8080
+version: '3.3'
 
-version: '3'
 services:
   dockovpn:
-    image: alekslitvinenk/openvpn
-    container_name: dockovpn
+    build:
+      context: .
+      dockerfile: Dockerfile  # 指向 Dockerfile
     cap_add:
-      - NET_ADMIN
+      - NET_ADMIN  # 允许容器进行网络管理
+    container_name: dockovpn
     ports:
-      - "1194:1194/udp"
-      - "80:8080/tcp"
-    restart: unless-stopped
-      #stdin_open: true # equivalent to -i in docker run
-      #tty: true        # equivalent to -t in docker run
-
+      - "402:1194/tcp"  # 映射主机的 443 端口到容器的 1194 TCP 端口
+      - "80:8080/tcp"  # 映射主机的 8080 端口到容器的 8080 TCP 端口
+    environment:
+      - HOST_TUN_PORT=402  #
+    restart: unless-stopped  # 容器失败时自动重启
